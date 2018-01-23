@@ -8,28 +8,34 @@ import {MediaService} from '../services/media.service';
 })
 export class ListMediaComponent implements OnInit {
 
-  tervehdys: string; // muuttuja tervedystä varten
-  kaikkiMedia: any; // any eli mikä tahansa tyyppi
-  mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
+    tervehdys: string; // muuttuja tervedystä varten
+    kaikkiMedia: any; // any eli mikä tahansa tyyppi
+    mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
-  constructor(private mediaService: MediaService) {
+    constructor(private mediaService: MediaService) {
 
-  }
+    }
 
-  ngOnInit() {
-    this.tervehdys = this.mediaService.testi;
-    this.mediaService.getAllMedia().subscribe( data => { // subscribe palauttaa vakiona JSON tiedoston
-      this.kaikkiMedia = data;
-      // splitataan nimi erikseen ja pääte erikseen, eli piste toimii jakokohtana
-      const temp = this.kaikkiMedia[0].filename.split('.');
-      // näin toimii split, katsotaan consolessa tuloksia
-      console.log(temp);
-      const uusinimi = temp[0] + '-tn320.png'; // funktion sisäisiin muuttujiin const tai let, ei thissiä
-        // katsotaan consolessa, että saadaan filename extension
-      console.log(uusinimi);
+    ngOnInit() {
+        this.tervehdys = this.mediaService.testi;
+        this.mediaService.getAllMedia().subscribe(data => {
+            this.kaikkiMedia = data;
+            console.log(this.kaikkiMedia);
+            /*
+            for (let i = 0; i < this.kaikkiMedia.length; i++) {
+              const temp = this.kaikkiMedia[i].filename.split('.');
+              const uusinimi = temp[0] + '-tn320.png';
+              this.kaikkiMedia[i].thumbnail = uusinimi;
+            }
+             */
+            this.kaikkiMedia.map(media => {
+                const temp = media.filename.split('.');
+                const uusinimi = temp[0] + '-tn320.png';
+                media.thumbnail = uusinimi;
+            });
 
-        console.log(this.kaikkiMedia);
-    });
-  }
+            console.log(this.kaikkiMedia);
+        });
+    }
 
 }

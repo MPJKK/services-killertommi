@@ -2,11 +2,10 @@
   {{tervehdys}}
 </p>
 
-<ul>   <!-- let media sana luodaan tässä vaiheessa, hakee kysittäisen kaiken media jokuosta-->
-      <!-- kaikkiMedia sisältää listan, jota ngFor looppaa. Listassa on kaksi kuvaa.-->
-  <li *ngFor="let media of kaikkiMedia">   <!-- laitetaan ng siihen elementtiin, jota halutaan toistaa eli li-elementtiin-->
-    <img [src]="mediaUrl + media.filename"/>
-    <h4>Title</h4>
-    <p>Description</p>
+<ul>
+  <li *ngFor="let media of kaikkiMedia">
+    <img [src]="mediaUrl + media.thumbnail">
+    <h4>{{ media.title }}</h4>
+    <p>{{ media.description }}</p>
   </li>
 </ul>
